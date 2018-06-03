@@ -1,0 +1,20 @@
+{
+    "RabbitMQUrl": "amqp://localhost/",
+    "RedisUrl": "redis://127.0.0.1:6379",
+    "TestData": "/mnt/syzoj-data/uploads/testdata",
+    "Priority": 1,
+    "DebugMessageDisplayLimit": 5000,
+    "OutputLimit": 104857600,
+    "StderrDisplayLimit": 5120,
+    "DataDisplayLimit": 128,
+    "CompilerMessageLimit": 50000,
+    "SpjTimeLimit": 1501,
+    "SpjMemoryLimit": 256,
+    "SandboxEnvironments": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "HOME=/tmp"
+    ],
+    "SandboxUser": "nobody",
+    "SandboxRoot": "/sandbox-rootfs",
+    "BinaryDirectory": "/mnt/syzoj-bin"
+}

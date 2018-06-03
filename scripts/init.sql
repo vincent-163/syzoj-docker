@@ -1,0 +1,5 @@
+CREATE USER 'syzoj'@'%';
+SET PASSWORD FOR 'syzoj'@'%' = PASSWORD('syzoj');
+CREATE DATABASE syzoj CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+GRANT ALL PRIVILEGES ON syzoj.* TO 'syzoj'@'%';
+FLUSH PRIVILEGES;
