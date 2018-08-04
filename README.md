@@ -13,7 +13,7 @@
 
 容器运行后会在 `/opt/syzoj/data` 对应的文件夹内创建若干文件夹，其中 `testdata` 用于存放测试数据，`testdata-archive` 用于存放测试数据的 zip 文件。`testdata` 文件夹下应存放以题号命名的文件夹，在文件夹内放置数据文件；`testdata-archive` 文件夹下应存放格式为 `XXX.zip` 的压缩文件，其中 XXX 为题号。
 
-可以通过 `docker exec -it build_web_1 /bin/bash` 来访问容器的 shell。
+可以通过 `docker exec -it syzoj-docker_web_1 /bin/bash` 来访问容器的 shell。
 随后执行 `mysql -hmysql -uroot -proot` 可以访问 MySQL 服务器，执行赋予管理员权限等操作。
 
 # 注意事项
