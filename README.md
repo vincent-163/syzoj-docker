@@ -13,8 +13,13 @@
 
 容器运行后会在 `/opt/syzoj/data` 对应的文件夹内创建若干文件夹，其中 `testdata` 用于存放测试数据，`testdata-archive` 用于存放测试数据的 zip 文件。`testdata` 文件夹下应存放以题号命名的文件夹，在文件夹内放置数据文件；`testdata-archive` 文件夹下应存放格式为 `XXX.zip` 的压缩文件，其中 XXX 为题号。
 
-可以通过 `docker exec -it build_web_1 /bin/bash` 来访问容器的 shell。
+可以通过 `docker exec -it build_web_1 /bin/bash` 来访问容器的 shell。`/root`（也就是容器的工作目录）下会存放日志，可以用于诊断问题。
 随后执行 `mysql -hmysql -uroot -proot` 可以访问 MySQL 服务器，执行赋予管理员权限等操作。
 
 # 注意事项
 **部署后请一定进入管理后台**，修改配置文件中的 `session_secret` `judge_token` 和 `email_jwt_secret`。这三个值不需要记住，也不需要备份，写在配置文件中即可，但一旦泄漏，会造成安全隐患！使用随机密码生成器任意生成一组即可。
+
+# FAQ
+## 提交后无限 Running 怎么办？
+这是 runner 的问题，进入容器环境查看 runner.log 即可分析错误原因。
+一般都是由于没有正确配置 `/etc/default/grub` 造成的，请检查此步骤。如果仍然无法评测，尝试把相关选项移动到 `GRUB_CMDLINE_LINUX`.
