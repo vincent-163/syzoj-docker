@@ -1,6 +1,6 @@
 {
     "ServerUrl": "http://syzoj:5283/",
-    "ServerToken": "hT1DT3k97oZFSa4l",
+    "ServerToken": "@JUDGE_TOKEN@",
     "RabbitMQUrl": "amqp://rabbitmq/",
     "RedisUrl": "redis://redis:6379",
     "TestData": "/opt/syzoj/data/uploads/testdata",

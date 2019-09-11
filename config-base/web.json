@@ -111,10 +111,10 @@
       "url": "https://loj.ac/"
     }
   ],
-  "session_secret": "hT1DT3k97oZFSa4l",
-  "judge_token": "hT1DT3k97oZFSa4l",
+  "session_secret": "@SESSION_SECRET@",
+  "judge_token": "@JUDGE_TOKEN@",
   "redis": "redis://redis:6379",
-  "email_jwt_secret": "hT1DT3k97oZFSa4l",
+  "email_jwt_secret": "@EMAIL_JWT_SECRET@",
   "google_analytics": "UA-XXXXXXXX-X",
   "gravatar_url": "https://cdn.v2ex.com/gravatar",
   "cdnjs_url": "built-in",

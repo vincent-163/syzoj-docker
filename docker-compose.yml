@@ -1,41 +1,56 @@
-version: '2.3'
+version: "3"
 services:
-  web:
-    image: "syzoj/syzoj"
-    ports:
-      - "5283:5283"
-    tmpfs:
-      - /mnt/syzoj-tmp1
-      - /mnt/syzoj-tmp2
-      - /mnt/syzoj-bin
-    volumes:
-      - /home/hewenyang/syzoj-docker/sandbox-rootfs:/sandbox-rootfs
-      - /opt/syzoj/data:/mnt/syzoj-data
-    privileged: true
-    networks:
-      syzoj_net:
-        ipv4_address: 172.16.0.2
-        ipv6_address: fc00::10
-    depends_on:
-      - mysql
-
-    stdin_open: true
-    tty: true
   mysql:
-    image: "mysql:5.6"
+    image: mariadb:10.3
     networks:
-      syzoj_net:
-        ipv4_address: 172.16.0.3
-        ipv6_address: fc00::11
+      - net
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
-
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+  redis:
+    image: redis:5
+    networks:
+      - net
+    volumes:
+      - ./data/redis:/var/lib/redis
+    command: ["redis-server", "--appendonly", "yes"]
+  rabbitmq:
+    image: rabbitmq
+    networks:
+      - net
+  syzoj:
+    image: syzoj/syzoj:base
+    networks:
+      - net
+    volumes:
+      - ./config:/opt/config
+      - ./data/syzoj:/opt/syzoj/data
+    command: ["node", "/opt/syzoj/app.js", "-c", "/opt/config/web.json"]
+    working_dir: "/opt/syzoj"
+    ports:
+      - 5283:5283
+  judger:
+    image: syzoj/syzoj
+    networks:
+      - net
+    volumes:
+      - ./config:/opt/config
+      - ./data/syzoj:/opt/syzoj/data
+    working_dir: "/opt/judge-v3"
+    command: ["node", "/opt/judge-v3/lib/daemon/index.js", "-c", "/opt/config/daemon.json", "-v"]
+  runner:
+    image: syzoj/syzoj
+    networks:
+      - net
+    volumes:
+      - ./config:/opt/config
+      - ./data/syzoj:/opt/syzoj/data
+      - ./sandbox-rootfs:/sandbox-rootfs
+      - ./data/bin:/opt/binary
+      - ./data/temp1:/opt/temp
+    working_dir: "/opt/judge-v3"
+    command: ["node", "/opt/judge-v3/lib/runner/index.js", "-s", "/opt/config/runner-shared.json", "-i", "/opt/config/runner-instance.json", "-v"]
+    privileged: true
 networks:
-  syzoj_net:
-    driver: bridge
-    enable_ipv6: true
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.16.0.0/24
-        - subnet: fc00::/64
+  net:
