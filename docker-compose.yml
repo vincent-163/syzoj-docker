@@ -31,7 +31,7 @@ services:
     ports:
       - 5283:5283
   judger:
-    image: syzoj/syzoj
+    image: syzoj/syzoj:base
     networks:
       - net
     volumes:
@@ -40,7 +40,7 @@ services:
     working_dir: "/opt/judge-v3"
     command: ["node", "/opt/judge-v3/lib/daemon/index.js", "-c", "/opt/config/daemon.json", "-v"]
   runner:
-    image: syzoj/syzoj
+    image: syzoj/syzoj:base
     networks:
       - net
     volumes:
