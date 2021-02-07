@@ -30,6 +30,8 @@ services:
     working_dir: "/opt/syzoj"
     ports:
       - 5283:5283
+    environment:
+      - TZ=Asia/Shanghai
   judger:
     image: syzoj/syzoj:base
     networks:
